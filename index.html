@@ -28,7 +28,14 @@ layout: true
 
 ## Experimental Narratives
 
-![Default-aligned-image](img/lizard.jpg)
+![Default-aligned-image](img/title.jpg)
+
+Matt Thompson, EngD at University of Bath and Sysemia Ltd, Bristol
+
+---
+class: inverse, center, middle
+
+# Generative vs Interactive narratives
 
 ---
 layout: false
@@ -60,13 +67,6 @@ class: inverse, center, middle
 <!-- will want a tree diagram here, explain that most are dead ends -->
 <!-- screenshot -->
 ![Default-aligned-image](img/choose.jpg)
-
----
-class: inverse, center, middle
-
-## Fighting Fantasy
-
-![Default-aligned-image](img/lizard.jpg)
 
 ---
 class: inverse, center, middle
@@ -142,6 +142,7 @@ class: center, middle, inverse
 # That's the way to do it!
 
 <!-- Punch and Judy image -->
+![Default-aligned-image](img/punchjudy.png)
 
 ---
 layout: false
@@ -152,16 +153,6 @@ layout: false
 - Simple, well-defined characters
 - Variable set of outcomes
 - Audience interaction
-
----
-
-# Implementation
-
-Three layers:
-
-- narrative manager
-- multi-agent system
-- environment (animation)
 
 
 ---
@@ -176,6 +167,15 @@ Three layers:
 6. Punch fights with the crocodile (_struggle_).
 7. Joey returns to find that the sausages are gone (_return_).
 
+---
+
+# Implementation
+
+Three layers:
+
+- narrative manager (institution)
+- multi-agent system (emotional agents)
+- environment (animation)
 
 ---
 class: center, middle, inverse
@@ -184,19 +184,66 @@ class: center, middle, inverse
 
 Modelling stories as 'social' norms.
 
-<!-- add details from other slides -->
+---
+
+# Institutions
+
+- An institution describes the story world as social norms
+- Says what characters are _permitted_ and _obliged_ to do
+- Characters can deviate from these norms, but at a cost
 
 ---
+
+# Institutions: ASP
+
+- ASP: Answer Set Programming
+- Describes the story world
+- Timeline of events as input
+- Solver works out what permissions and obligations hold next
+
+---
+class: center, middle, inverse
 
 # Emotions
 
-Agents and emotional models
+Valence, arousal and dominance
 
 ---
+
+# VAD
+
+- valence: positive/negative
+- arousal: excited/bored
+- dominance: dominant/submissive
+
+---
+class: center
+
+![Default-aligned-image](img/lowdom.png)
+
+---
+class: center
+
+![Default-aligned-image](img/meddom.png)
+
+---
+class: center
+
+![Default-aligned-image](img/highdom.png)
+
+---
+class: center, inverse
 
 # Real-world narratives
 
 <!-- "Valley of desolation" pic here -->
+![Default-aligned-image](img/desolation.jpg)
+
+---
+
+# Every Object Tells a Story
+
+![Default-aligned-image](img/bishopspalace.jpg)
 
 ---
 
@@ -205,6 +252,75 @@ Agents and emotional models
 - TSB-funded project between Sysemia Ltd, University of Bath and the Bishop's Palace in Wells
 
 ---
+
+# What is it?
+
+- Person walks around the exhibition space with a tablet device
+- Bluetooth LE beacons (iBeacons) are used to get their location
+- They are given options and recommendations based on where they go and what they do
+- BUT: in a narrative-y way
+
+---
+
+# Bluetooth LE beacons
+
+<!-- pic would be nice -->
+
+- Work like radio beacons (but using Bluetooth LE)
+- Just send out a signal
+- Distance from beacon is based on signal strength
+
+---
+
+# Design
+
+- Resembles a 'Choose Your Own Adventure' book
+- Story is told in the second person
+- Three types of action: _visit_, _examine_ and _ask_.
+- Actions are stored as a list of events
+
+---
+
+# Recommendations
+
+- Introduced in the context of the narrative
+- Example:
+  > _"You remember someone in the local pub telling you about this painting of Bishop Jocelyn. She suggested also looking at the chair he used, which is in the Bishop's house."_
+
+---
+# How are facts stored?
+
+- RDF semantics (subject-predicate-object triples)
+- Stored in JSON-LD format
+- schema.org ontology for simplicity
+
+---
+# Event Calculus solver
+
+<!-- get ref for this -->
+
+- The Event Calculus describes how events happen over time using mathematical logic
+- This allows us to reason about what may or may not be true at a certain point in time
+
+---
+
+# The Event Calculus
+
+- _Fluents_ are properties that are true or false.
+- Events _occur_, which _initiate_ or _terminate_ fluents at instants in time
+- A fluent _holds_ (is true) at a point in time if it has been initiated, but not terminated.
+
+---
+
+# Implementation details
+
+- Runs on Nexus 7 tablet
+- HTML based, Cordova app
+- Coded in Clojurescript
+- Clojurescript's core.logic for Event Calculus
+
+---
+
 class:inverse, middle, center
 
 # Questions
