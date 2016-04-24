@@ -1,0 +1,13 @@
+"The Hero's Journey" is a Trope where:
+  The Hero is at Home
+  Then the Hero meets the Dispatcher
+  Then the Hero must go to the Land Of Adventure before the Villain kills the Victim
+    Otherwise, the Story must end
+  When the Hero is at the Land of Adventure:
+    The Hero may kill the Villain
+      Or the Villain may escape
+  Then the Hero returns Home
+
+% roles, object types, locations must be Capitalised
+% 'is at' is a statement of fact
+% present simple verbs (i.e 'meets') -> 'may' in the parser

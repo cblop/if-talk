@@ -1,0 +1,9 @@
+"The Evil Empire" is a Trope where:
+  The Villain has an Empire
+  The Empire is a Weapon
+  The Villain may kill the Hero
+    Or the Hero may destroy the Empire
+
+  % tries to -> 'may' in the parser
+  % so you could also say 'The Villain tries to kill the Hero'
+  % 'or' suggests that only one outcome is possible
