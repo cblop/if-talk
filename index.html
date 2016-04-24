@@ -26,323 +26,231 @@ layout: true
 
 ---
 
-## Experimental Narratives
+## Building Interactive Stories with Tropes
 
 ![Default-aligned-image](img/title.jpg)
 
-Matt Thompson, EngD at University of Bath (CDE) and Sysemia Ltd, Bristol
+Matt Thompson, EngD student at University of Bath (CDE) and Sysemia Ltd, Bristol
+
+Slides: [mthompson.org/if-talk](http://mthompson.org/if-talk)
 
 ---
 class: inverse, center, middle
 
-# Generative vs Interactive narratives
+# Generative vs Interactive Narratives
+
+---
+class: inverse, center, middle
+background-image: url(img/generative.png)
+
+## Generative Narratives
+
+---
+
+background-image: url(img/interactive.png)
+
+## Interactive Narratives
 
 ---
 layout: false
 
-# Generative narratives
+## Why not both?
 
-- No pre-written story or narrative exists.
-- The narrative emerges as a result of a series of complex interactions in the game.
-- This tends to happen in sandbox-style, open-world games
-- Examples: Civilisation, Dwarf Fortress, some MMORPGs
-
----
-class: inverse, center
-
-![Default-aligned-image](img/civ.png)
+- Generative elements save authors time and drudgery
+- However, pre-written branches give the author total control
+- Is there some way we can get the best of both worlds?
 
 ---
 
-## Interactive (non-linear) narratives
+## Planners: the dominant (academic) approach
 
-- The narrative is pre-written with several branches
-- Player's interactions decide which branches play out
+Majority of academic research involves:
 
----
-class: inverse, center, middle
+- Intelligent Agents as characters
+- Planners to "direct" the agents
 
-## Choose Your Own Adventure
+This is nice, but:
 
-<!-- will want a tree diagram here, explain that most are dead ends -->
-<!-- screenshot -->
-![Default-aligned-image](img/choose.jpg)
+- The author must still write lots of goals for the agent and the story
+- The characters have no agency!
 
----
-class: inverse, center, middle
-# Has anyone done both?
+<!-- (diagram?) -->
 
 ---
-class: center
+## Our crazy idea: Social Norms
 
-# Galatea
+- If intelligent agents are the characters in a simulated world, what is the story?
+- Need something abstract, invisible, that gently "guides" the characters
 
-![Default-aligned-image](img/galatea.jpg)
+How about social norms?
 
-interactive fiction/text adventure by Emily Short
+- They invisibly govern our behaviour in the real world, why not in a story?
 
 ---
 class: center
+## Social Norms in a story?
 
-# Façade
-
-![Default-aligned-image](img/facade.jpg)
-
-Mateus and Stern - Facade: An Experiment in Building a Fully-Realized Interactive Drama
+![Default-aligned-image](img/seinfeld.jpg)
 
 ---
 
 class: center, middle, inverse
 
-# How do you model a narrative?
+# How do we describe stories as social norms?!
+
+We need a way to model story components!
 
 ---
-class: inverse, center
+layout: false
+class: center
 
 ## Joseph Cambell's Monomyth
 
 ![Default-aligned-image](img/hero.jpg)
 
 ---
-class: inverse, center
-
-## Kurt Vonnegut: Shapes of stories
-
-![Default-aligned-image](img/shapes.png)
-
----
-class: center, inverse
-
-# Vladimir Propp
+class: center
+## Vladimir Propp
 
 ![Default-aligned-image](img/propp.jpg)
 
 ---
 
-# Propp's story functions
+## Propp's story functions
 
 31 story functions, including:
 
-- _Absentation_: One of the members of a family absents himself from home.
-- _Interdiction_: An interdiction is addressed to the hero.
-- _Complicity_: The victim submits to deception and thereby unwittingly helps his enemy.
-- _Villainy_: The villain causes harm or injury to a member of the family.
+- **Absentation**: One of the members of a family absents himself from home.
+- **Interdiction**: An interdiction is addressed to the hero.
+- **Complicity**: The victim submits to deception and thereby unwittingly helps his enemy.
+- **Villainy**: The villain causes harm or injury to a member of the family.
 
 ---
 
 class: center, middle, inverse
+# Tropes!
 
-# How to make a generative, interactive narrative
+
+![Default-aligned-image](img/tv-tropes-logo.png)
+
+---
+layout: false
+## Tropes?
+
+- Multiple levels of abstraction
+- A trope can describe a whole story, a scene or just a character or line of dialogue
+- Can be endlessly combined for plenty of rich possibilities
+- TVTropes ([tvtropes.org](http://tvtropes.org)) is the Wikipedia of tropes, with a very active community
+- [The Periodic Table of Storytelling](http://www.designthroughstorytelling.net/periodic/) is one way of organising/visualising tropes
+
+---
+### Trope examples
+
+**The Hero's Journey**: A hero answers a call to adventure, and leaves home to go on a journey. They defeat the villain along the way, returning back home triumphant.
+
+**The Evil Empire**: The villain is part of an empire, which tries to stop the hero at all costs.
+
+**The MacGuffin**: There's some object that the hero is after, but which the audience doesn't really care about
+
+**Chekhov's Gun**: If a gun appears somewhere in the first act, it must be fired by the end of the third.
 
 ---
 
+layout: false
+### Tropes that even a computer can understand
+
+Break them down into three things:
+
+- characters (**roles**)
+- objects (**types**)
+- places (**locations**)
+
+Describe their interactions with (deontic) logic:
+
+- permissions: a character **may** go to the cinema
+- obligations: a character **must** study before the exam, otherwise they will fail
+
+---
+
+## Examples
+
+*The Hero's Journey*: The hero **must** leave home when they receive the call to adventure. Then the hero **may** kill the villain. Once this is done, the hero **may** return home.
+
+*The Evil Empire*: The villain has an empire, and **may** kill the hero.
+
+*MacGuffin*: The hero **must** search for an object. However, the hero **may** find it.
+
+---
 
 class: center, middle, inverse
+# The Nasty Details
 
-# That's the way to do it!
-
-<!-- Punch and Judy image -->
-![Default-aligned-image](img/punchjudy.png)
+How all this is actually coded
 
 ---
 layout: false
 
-# Why Punch and Judy?
+## Answer Set Programming
 
-- Extremely simple story domain
-- Simple, well-defined characters
-- Variable set of outcomes
-- Audience interaction
+Loads of tropes can be active at once, so how do we work out what permissions/obligations the characters have?
 
-
----
-
-# P&J Scene Using Propp
-
-1. Joey tells Punch to look after the sausages (_interdiction_).
-2. Joey has some reservations, but decides to trust Punch (_complicity_).
-3. Joey gives the sausages to Punch (_provision or receipt of a magical agent_).
-4. Joey leaves the stage (_absentation_).
-5. A crocodile enters the stage and eats the sausages (_violation_).
-6. Punch fights with the crocodile (_struggle_).
-7. Joey returns to find that the sausages are gone (_return_).
+- We use **Answer Set Programming** (logic programming, like Prolog) to describe the story
+- Then we tell it what events have happened so far in the story
+- Then we use a **solver** to work out what can happen next
 
 ---
 
-# Implementation
+## We made a language! We called it TropICAL!
 
-Three layers:
-
-- narrative manager (institution)
-- multi-agent system (emotional agents)
-- environment (animation)
-
----
-class: center, middle, inverse
-
-# Institutions
-
-Modelling stories as 'social' norms.
+- TropICAL: the TROPe Interactive Chronical Action Language
+- Inform 7-inspired syntax
+- Compiles to InstAL (a language for deontic logic), which compiles to AnsProlog (ASP)
+- Double the compilation, double the fun!
+- (I'll show you some examples)
 
 ---
 
-# Institutions
+## StoryBuilder
 
-- An institution describes the story world as social norms
-- Says what characters are _permitted_ and _obliged_ to do
-- Characters can deviate from these norms, but at a cost
+StoryBuilder is a tool that makes it simple for authors to:
 
----
+- **Create** and edit their own tropes
+- **Arrange** tropes to form a story
+- **Play** the resulting story
+- **Share** the story with their friends
 
-# Example
-
-- When Joey leaves the stage, it generates the _absentation_ Propp story function in the institution.
-- The _absentation_ event gives the crocodile _permission_ to enter the stage if there are any sausages.
-- It also terminates Joey's _permission_ to leave the stage
-- The crocodile has the _obligation_ to eat the sausages before Joey returns
+There's still work to be done, as you'll see in my demo!
 
 ---
 
-# Institutions: ASP
+## Summary of our approach:
 
-- ASP: Answer Set Programming
-- Describes the story world
-- Timeline of events as input
-- Solver works out what permissions and obligations hold next
+- **Intelligent Agents** to model characters (beliefs, desires, intentions)
+- **Social Norms** to govern the characters in a narrative
+- **Tropes** to describe the social norms
+- Fancy logic programming (**Answer Set Programming**) to work out what norms/tropes hold at any given point in the story
 
-
----
-class: center, middle, inverse
-
-# Emotions
-
-Valence, arousal and dominance
+Authors spend less time writing, characters have some autonomy
 
 ---
 
-# VAD
+## The missing pieces
 
-- valence: positive/negative
-- arousal: excited/bored
-- dominance: dominant/submissive
+Plenty of work to be done on StoryBuilder:
 
----
-class: center
-
-![Default-aligned-image](img/lowdom.png)
-
----
-class: center
-
-![Default-aligned-image](img/meddom.png)
-
----
-class: center
-
-![Default-aligned-image](img/highdom.png)
-
----
-
-# Interaction
-
-- Characters announce their intentions
-- Audience cheers or boos at the characters
-- This affects their emotions
-- Their decisions are determined by their emotions, as well as permitted and obliged actions
-
----
-class: center, inverse
-
-# Real-world narratives
-
-<!-- "Valley of desolation" pic here -->
-![Default-aligned-image](img/desolation.jpg)
-
----
-
-# Every Object Tells a Story
-
-![Default-aligned-image](img/bishopspalace.jpg)
-
----
-
-# Every Object Tells a Story
-
-- TSB-funded project between Sysemia Ltd, University of Bath and the Bishop's Palace in Wells
-
----
-
-# What is it?
-
-- Person walks around the exhibition space with a tablet device
-- Bluetooth LE beacons (iBeacons) are used to get their location
-- They are given options and recommendations based on where they go and what they do
-- BUT: in a narrative-y way
-
----
-
-# Design
-
-- Resembles a 'Choose Your Own Adventure' book
-- Story is told in the second person
-- Three types of action: _visit_, _examine_ and _ask_.
-- Actions are stored as a list of events
-
----
-class: center
-
-<!-- screenshot goes here -->
-![Default-aligned-image](img/screen1.png)
-
----
-class: center
-
-<!-- screenshot goes here -->
-![Default-aligned-image](img/screen2.png)
-
----
-class: center
-
-<!-- screenshot goes here -->
-![Default-aligned-image](img/screen3.png)
-
----
-# How are facts stored?
-
-- RDF semantics (subject-predicate-object triples)
-- Stored in JSON-LD format
-- schema.org ontology for simplicity
-
----
-# Event Calculus solver
-
-<!-- get ref for this -->
-
-- The Event Calculus describes how events happen over time using mathematical logic
-- This allows us to reason about what may or may not be true at a certain point in time
-
----
-
-# The Event Calculus
-
-- _Fluents_ are properties that are true or false.
-- Events _occur_, which _initiate_ or _terminate_ fluents at instants in time
-- A fluent _holds_ (is true) at a point in time if it has been initiated, but not terminated.
-
----
-
-# Implementation details
-
-- Runs on Nexus 7 tablet
-- HTML based, Cordova app
-- Coded in Clojurescript
-- Clojurescript's core.logic for Event Calculus
+- Need a way of creating characters, their dialogue and goals
+- Then hooking it up to a Multi Agent System
+- Also a way to describe objects and places, and their characteristics
+- Populate the DB with pre-written tropes
+- Share it with the TVTropes community to get more tropes
 
 ---
 
 class:inverse, middle, center
 
 # Questions
+
+(I also have some questions for YOU!)
 
 m.r.thompson@bath.ac.uk
 

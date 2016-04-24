@@ -24,6 +24,9 @@ a, a > code {
     color: rgb(249, 38, 114);
     text-decoration: none;
 }
+strong {
+    color: rgb(249, 39, 114);
+}
 code {
     -moz-border-radius: 5px;
     -web-border-radius: 5px;
