@@ -91,15 +91,6 @@ observed(E,In,I) :- compObserved(E,I), inst(In), instant(I).
   event(viol(meet(Agent0,Agent1))) :- agent(Agent0),agent(Agent1).
   evtype(viol(meet(Agent0,Agent1)), story, viol) :- agent(Agent0),agent(Agent1).
   evinst(viol(meet(Agent0,Agent1)),story) :- agent(Agent0),agent(Agent1).
-% Event: gets (type: ex)
-  event(gets(Agent0,ObjectName1)) :- agent(Agent0),objectname(ObjectName1).
-  evtype(gets(Agent0,ObjectName1),story,ex) :- agent(Agent0),objectname(ObjectName1).
-  evinst(gets(Agent0,ObjectName1),story) :- agent(Agent0),objectname(ObjectName1).
-  ifluent(perm(gets(Agent0,ObjectName1)), story) :- agent(Agent0),objectname(ObjectName1).
-  fluent(perm(gets(Agent0,ObjectName1)), story) :- agent(Agent0),objectname(ObjectName1).
-  event(viol(gets(Agent0,ObjectName1))) :- agent(Agent0),objectname(ObjectName1).
-  evtype(viol(gets(Agent0,ObjectName1)), story, viol) :- agent(Agent0),objectname(ObjectName1).
-  evinst(viol(gets(Agent0,ObjectName1)),story) :- agent(Agent0),objectname(ObjectName1).
 % Event: noDeadline (type: ex)
   event(noDeadline(Identity0)) :- identity(Identity0).
   evtype(noDeadline(Identity0),story,ex) :- identity(Identity0).
@@ -109,6 +100,15 @@ observed(E,In,I) :- compObserved(E,I), inst(In), instant(I).
   event(viol(noDeadline(Identity0))) :- identity(Identity0).
   evtype(viol(noDeadline(Identity0)), story, viol) :- identity(Identity0).
   evinst(viol(noDeadline(Identity0)),story) :- identity(Identity0).
+% Event: kill (type: ex)
+  event(kill(Agent0,Agent1)) :- agent(Agent0),agent(Agent1).
+  evtype(kill(Agent0,Agent1),story,ex) :- agent(Agent0),agent(Agent1).
+  evinst(kill(Agent0,Agent1),story) :- agent(Agent0),agent(Agent1).
+  ifluent(perm(kill(Agent0,Agent1)), story) :- agent(Agent0),agent(Agent1).
+  fluent(perm(kill(Agent0,Agent1)), story) :- agent(Agent0),agent(Agent1).
+  event(viol(kill(Agent0,Agent1))) :- agent(Agent0),agent(Agent1).
+  evtype(viol(kill(Agent0,Agent1)), story, viol) :- agent(Agent0),agent(Agent1).
+  evinst(viol(kill(Agent0,Agent1)),story) :- agent(Agent0),agent(Agent1).
 %
 % null event for unknown events
 % Event: null (type: ex)
@@ -121,17 +121,28 @@ observed(E,In,I) :- compObserved(E,I), inst(In), instant(I).
   evtype(viol(null),story,viol).
   evinst(viol(null),story).
 % Institutional events
+% Event: intGo (type: in)
+  event(intGo(Agent0,PlaceName1)) :- agent(Agent0),placename(PlaceName1).
+  evtype(intGo(Agent0,PlaceName1),story,inst) :- agent(Agent0),placename(PlaceName1).
+  evinst(intGo(Agent0,PlaceName1),story) :- agent(Agent0),placename(PlaceName1).
+  ifluent(pow(story,intGo(Agent0,PlaceName1)),story) :- agent(Agent0),placename(PlaceName1).
+  ifluent(perm(intGo(Agent0,PlaceName1)),story) :- agent(Agent0),placename(PlaceName1).
+  fluent(pow(story,intGo(Agent0,PlaceName1)),story) :- agent(Agent0),placename(PlaceName1).
+  fluent(perm(intGo(Agent0,PlaceName1)),story) :- agent(Agent0),placename(PlaceName1).
+  event(viol(intGo(Agent0,PlaceName1))) :- agent(Agent0),placename(PlaceName1).
+  evtype(viol(intGo(Agent0,PlaceName1)),story,viol) :- agent(Agent0),placename(PlaceName1).
+  evinst(viol(intGo(Agent0,PlaceName1)),story) :- agent(Agent0),placename(PlaceName1).
 % Event: intHerosJourney (type: in)
-  event(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  evtype(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3),story,inst) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  evinst(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  ifluent(pow(story,intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  ifluent(perm(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  fluent(pow(story,intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  fluent(perm(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  event(viol(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3))) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  evtype(viol(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story,viol) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
-  evinst(viol(intHerosJourney(Agent0,Agent1,ObjectName2,PlaceName3)),story) :- agent(Agent0),agent(Agent1),objectname(ObjectName2),placename(PlaceName3).
+  event(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  evtype(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4),story,inst) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  evinst(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  ifluent(pow(story,intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  ifluent(perm(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  fluent(pow(story,intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  fluent(perm(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  event(viol(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4))) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  evtype(viol(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story,viol) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
+  evinst(viol(intHerosJourney(Agent0,Agent1,Agent2,PlaceName3,PlaceName4)),story) :- agent(Agent0),agent(Agent1),agent(Agent2),placename(PlaceName3),placename(PlaceName4).
 %
 % Violation events
 %
@@ -139,6 +150,10 @@ observed(E,In,I) :- compObserved(E,I), inst(In), instant(I).
   event(noViolation(Identity0)) :- identity(Identity0).
   evtype(noViolation(Identity0),story,viol) :- identity(Identity0).
   evinst(noViolation(Identity0),story) :- identity(Identity0).
+% Event: violAwayGoHero (type: in)
+  event(violAwayGoHero) :- true.
+  evtype(violAwayGoHero,story,viol) :- true.
+  evinst(violAwayGoHero,story) :- true.
 %
 % Creation events
 %
@@ -185,6 +200,33 @@ fluent(at(Agent0,Place1),story) :-
 %
 % obligation fluents
 %
+oblfluent(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)), story) :-
+   event(go(Agent0,PlaceName1)),
+   event(go(Agent2,PlaceName3)),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
+ifluent(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)), story) :-
+   event(go(Agent0,PlaceName1)),
+   event(go(Agent2,PlaceName3)),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
+fluent(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)), story) :-
+   event(go(Agent0,PlaceName1)),
+   event(go(Agent2,PlaceName3)),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
+terminated(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)),story,I) :-
+   event(go(Agent0,PlaceName1)), occurred(go(Agent0,PlaceName1),story,I),
+   event(go(Agent2,PlaceName3)),
+   holdsat(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)),story,I),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
+terminated(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)),story,I) :-
+   event(go(Agent0,PlaceName1)), 
+   event(go(Agent2,PlaceName3)), occurred(go(Agent2,PlaceName3),story,I),
+   holdsat(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)),story,I),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
+occurred(noViolation(Identity4),story,I) :-
+   event(go(Agent0,PlaceName1)), 
+   event(go(Agent2,PlaceName3)), occurred(go(Agent2,PlaceName3),story,I),
+   holdsat(obl(go(Agent0,PlaceName1),go(Agent2,PlaceName3),noViolation(Identity4)),story,I),
+   event(noViolation(Identity4)), agent(Agent0),placename(PlaceName1),agent(Agent2),placename(PlaceName3),identity(Identity4),inst(story).
 %
 % -------------------------------PART 2-------------------------------
 %
@@ -192,287 +234,396 @@ fluent(at(Agent0,Place1),story) :-
 % generate rules
 %
 %
-% Translation of gets(R,T) generates intHerosJourney(R,S,T,U) if ['and', ['role', ['R', 'hero']], ['object', ['T', 'weapon']]] in 
-occurred(intHerosJourney(R,S,T,U),story,I) :- occurred(gets(R,T),story,I),
-   holdsat(pow(story,intHerosJourney(R,S,T,U)),story,I),
+% Translation of go(R,T) generates intGo(R,T) if ['and', ['role', ['R', 'hero']], ['place', ['T', 'away']]] in 
+occurred(intGo(R,T),story,I) :- occurred(go(R,T),story,I),
+   holdsat(pow(story,intGo(R,T)),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(object(T,weapon),story,I),
+   holdsat(place(T,away),story,I),
    agent(R),
-   objectname(T),
-   agent(S),
-   placename(U),
+   placename(T),
    inst(story), instant(I).
 %
-% Translation of go(R,U) generates intHerosJourney(R,S,T,U) if ['and', ['role', ['R', 'hero']], ['place', ['U', 'home']]] in 
-occurred(intHerosJourney(R,S,T,U),story,I) :- occurred(go(R,U),story,I),
-   holdsat(pow(story,intHerosJourney(R,S,T,U)),story,I),
+% Translation of kill(R,S) generates intHerosJourney(R,S,T,U,V) if ['and', ['role', ['R', 'hero']], ['role', ['S', 'villain']]] in 
+occurred(intHerosJourney(R,S,T,U,V),story,I) :- occurred(kill(R,S),story,I),
+   holdsat(pow(story,intHerosJourney(R,S,T,U,V)),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(role(S,villain),story,I),
+   agent(S),
    agent(R),
    placename(U),
-   agent(S),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of meet(R,S) generates intHerosJourney(R,S,T,U) if ['and', ['role', ['R', 'hero']], ['role', ['S', 'dispatcher']]] in 
-occurred(intHerosJourney(R,S,T,U),story,I) :- occurred(meet(R,S),story,I),
-   holdsat(pow(story,intHerosJourney(R,S,T,U)),story,I),
+% Translation of go(R,V) generates intHerosJourney(R,S,T,U,V) if ['and', ['role', ['R', 'hero']], ['place', ['V', 'home']]] in 
+occurred(intHerosJourney(R,S,T,U,V),story,I) :- occurred(go(R,V),story,I),
+   holdsat(pow(story,intHerosJourney(R,S,T,U,V)),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(role(S,dispatcher),story,I),
-   agent(S),
+   holdsat(place(V,home),story,I),
    agent(R),
+   placename(V),
+   agent(S),
    placename(U),
-   objectname(T),
+   agent(T),
+   inst(story), instant(I).
+%
+% Translation of meet(R,T) generates intHerosJourney(R,S,T,U,V) if ['and', ['role', ['R', 'hero']], ['role', ['T', 'dispatcher']]] in 
+occurred(intHerosJourney(R,S,T,U,V),story,I) :- occurred(meet(R,T),story,I),
+   holdsat(pow(story,intHerosJourney(R,S,T,U,V)),story,I),
+   holdsat(role(R,hero),story,I),
+   holdsat(role(T,dispatcher),story,I),
+   agent(R),
+   agent(T),
+   agent(S),
+   placename(U),
+   placename(V),
    inst(story), instant(I).
 %
 % initiate rules
 %
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['phase', ['herosJourney', 'done']] if ['phase', ['herosJourney', 'phaseD']]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'done']] if ['phase', ['herosJourney', 'phaseE']]
 %
 initiated(phase(herosJourney,done),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
+   holdsat(live(story),story,I), inst(story),
+   holdsat(phase(herosJourney,phaseE),story,I),
+   agent(S),
+   agent(R),
+   placename(U),
+   agent(T),
+   placename(V),
+   inst(story), instant(I).
+%
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'phaseE']] if ['and', ['and', ['phase', ['herosJourney', 'phaseD']], ['role', ['R', 'hero']]], ['place', ['V', 'home']]]
+%
+initiated(phase(herosJourney,phaseE),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseD),story,I),
+   holdsat(role(R,hero),story,I),
+   holdsat(place(V,home),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['phase', ['herosJourney', 'phaseD']] if ['and', ['and', ['phase', ['herosJourney', 'phaseC']], ['role', ['R', 'hero']]], ['place', ['U', 'home']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['perm', ['go', ['R', 'V']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseD']], ['role', ['R', 'hero']]], ['place', ['V', 'home']]]
+%
+initiated(perm(go(R,V)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
+   holdsat(live(story),story,I), inst(story),
+   holdsat(phase(herosJourney,phaseD),story,I),
+   holdsat(role(R,hero),story,I),
+   holdsat(place(V,home),story,I),
+   agent(S),
+   agent(R),
+   placename(U),
+   agent(T),
+   placename(V),
+   inst(story), instant(I).
+%
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'phaseD']] if ['and', ['and', ['phase', ['herosJourney', 'phaseC']], ['role', ['R', 'hero']]], ['role', ['S', 'villain']]]
 %
 initiated(phase(herosJourney,phaseD),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseC),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(role(S,villain),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['perm', ['go', ['R', 'U']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseC']], ['role', ['R', 'hero']]], ['place', ['U', 'home']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['perm', ['kill', ['R', 'S']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseC']], ['role', ['R', 'hero']]], ['role', ['S', 'villain']]]
 %
-initiated(perm(go(R,U)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+initiated(perm(kill(R,S)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseC),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(role(S,villain),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['phase', ['herosJourney', 'phaseC']] if ['and', ['and', ['phase', ['herosJourney', 'phaseB']], ['role', ['R', 'hero']]], ['object', ['T', 'weapon']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'phaseC']] if ['and', ['and', ['and', ['and', ['phase', ['herosJourney', 'phaseB']], ['role', ['R', 'hero']]], ['place', ['U', 'away']]], ['role', ['S', 'villain']]], ['place', ['V', 'home']]]
 %
 initiated(phase(herosJourney,phaseC),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseB),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(object(T,weapon),story,I),
+   holdsat(place(U,away),story,I),
+   holdsat(role(S,villain),story,I),
+   holdsat(place(V,home),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['perm', ['gets', ['R', 'T']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseB']], ['role', ['R', 'hero']]], ['object', ['T', 'weapon']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['obl', [['go', ['R', 'U']], ['go', ['S', 'V']], ['noViolation', ['Identity']]]] if ['and', ['and', ['and', ['and', ['phase', ['herosJourney', 'phaseB']], ['role', ['R', 'hero']]], ['place', ['U', 'away']]], ['role', ['S', 'villain']]], ['place', ['V', 'home']]]
 %
-initiated(perm(gets(R,T)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+initiated(obl(go(R,U),go(S,V),noViolation(Identity)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseB),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(object(T,weapon),story,I),
+   holdsat(place(U,away),story,I),
+   holdsat(role(S,villain),story,I),
+   holdsat(place(V,home),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
+   identity(Identity),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['phase', ['herosJourney', 'phaseB']] if ['and', ['and', ['phase', ['herosJourney', 'phaseA']], ['role', ['R', 'hero']]], ['role', ['S', 'dispatcher']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'phaseB']] if ['and', ['and', ['phase', ['herosJourney', 'phaseA']], ['role', ['R', 'hero']]], ['role', ['T', 'dispatcher']]]
 %
 initiated(phase(herosJourney,phaseB),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseA),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(role(S,dispatcher),story,I),
+   holdsat(role(T,dispatcher),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['perm', ['meet', ['R', 'S']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseA']], ['role', ['R', 'hero']]], ['role', ['S', 'dispatcher']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['perm', ['meet', ['R', 'T']]] if ['and', ['and', ['phase', ['herosJourney', 'phaseA']], ['role', ['R', 'hero']]], ['role', ['T', 'dispatcher']]]
 %
-initiated(perm(meet(R,S)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+initiated(perm(meet(R,T)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,phaseA),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(role(S,dispatcher),story,I),
+   holdsat(role(T,dispatcher),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['phase', ['herosJourney', 'phaseA']] if ['and', ['and', ['phase', ['herosJourney', 'inactive']], ['role', ['R', 'hero']]], ['place', ['U', 'home']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['phase', ['herosJourney', 'phaseA']] if ['and', ['and', ['phase', ['herosJourney', 'inactive']], ['role', ['R', 'hero']]], ['place', ['V', 'home']]]
 %
 initiated(phase(herosJourney,phaseA),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,inactive),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(place(V,home),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) initiates ['perm', ['go', ['R', 'U']]] if ['and', ['and', ['phase', ['herosJourney', 'inactive']], ['role', ['R', 'hero']]], ['place', ['U', 'home']]]
+% Translation of intHerosJourney(R,S,T,U,V) initiates ['perm', ['go', ['R', 'V']]] if ['and', ['and', ['phase', ['herosJourney', 'inactive']], ['role', ['R', 'hero']]], ['place', ['V', 'home']]]
 %
-initiated(perm(go(R,U)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+initiated(perm(go(R,V)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I), inst(story),
    holdsat(phase(herosJourney,inactive),story,I),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(place(V,home),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
 % terminate rules
 %
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'done']] if ['phase', ['herosJourney', 'done']]
+% Translation of intGo(S,U) terminates ['obl', [['go', ['R', 'T']], ['go', ['S', 'U']], ['noViolation', ['Identity']]]] if ['and', ['and', ['and', ['role', ['R', 'hero']], ['place', ['T', 'away']]], ['role', ['S', 'villain']]], ['place', ['U', 'home']]]
+%
+terminated(obl(go(R,T),go(S,U),noViolation(Identity)),story,I) :-
+   occurred(intGo(S,U),story,I),
+   holdsat(live(story),story,I),inst(story),
+   holdsat(role(R,hero),story,I),
+   holdsat(place(T,away),story,I),
+   holdsat(role(S,villain),story,I),
+   holdsat(place(U,home),story,I),
+   agent(S),
+   agent(R),
+   placename(U),
+   placename(T),
+   identity(Identity),
+   inst(story), instant(I).
+%
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'done']] if ['phase', ['herosJourney', 'done']]
 %
 terminated(phase(herosJourney,done),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,done),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'phaseD']] if ['phase', ['herosJourney', 'phaseD']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'phaseE']] if ['phase', ['herosJourney', 'phaseE']]
+%
+terminated(phase(herosJourney,phaseE),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
+   holdsat(live(story),story,I),inst(story),
+   holdsat(phase(herosJourney,phaseE),story,I),
+   agent(S),
+   agent(R),
+   placename(U),
+   agent(T),
+   placename(V),
+   inst(story), instant(I).
+%
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['perm', ['go', ['R', 'V']]] if ['phase', ['herosJourney', 'phaseE']]
+%
+terminated(perm(go(R,V)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
+   holdsat(live(story),story,I),inst(story),
+   holdsat(phase(herosJourney,phaseE),story,I),
+   agent(S),
+   agent(R),
+   placename(U),
+   agent(T),
+   placename(V),
+   inst(story), instant(I).
+%
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'phaseD']] if ['phase', ['herosJourney', 'phaseD']]
 %
 terminated(phase(herosJourney,phaseD),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseD),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['perm', ['go', ['R', 'U']]] if ['phase', ['herosJourney', 'phaseD']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['perm', ['kill', ['R', 'S']]] if ['phase', ['herosJourney', 'phaseD']]
 %
-terminated(perm(go(R,U)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+terminated(perm(kill(R,S)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseD),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'phaseC']] if ['phase', ['herosJourney', 'phaseC']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'phaseC']] if ['phase', ['herosJourney', 'phaseC']]
 %
 terminated(phase(herosJourney,phaseC),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseC),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['perm', ['gets', ['R', 'T']]] if ['phase', ['herosJourney', 'phaseC']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['obl', [['go', ['R', 'U']], ['go', ['S', 'V']], ['noViolation', ['Identity']]]] if ['phase', ['herosJourney', 'phaseC']]
 %
-terminated(perm(gets(R,T)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+terminated(obl(go(R,U),go(S,V),noViolation(Identity)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseC),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
+   identity(Identity),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'phaseB']] if ['phase', ['herosJourney', 'phaseB']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'phaseB']] if ['phase', ['herosJourney', 'phaseB']]
 %
 terminated(phase(herosJourney,phaseB),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseB),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['perm', ['meet', ['R', 'S']]] if ['phase', ['herosJourney', 'phaseB']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['perm', ['meet', ['R', 'T']]] if ['phase', ['herosJourney', 'phaseB']]
 %
-terminated(perm(meet(R,S)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+terminated(perm(meet(R,T)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseB),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'phaseA']] if ['phase', ['herosJourney', 'phaseA']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'phaseA']] if ['phase', ['herosJourney', 'phaseA']]
 %
 terminated(phase(herosJourney,phaseA),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseA),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['perm', ['go', ['R', 'U']]] if ['phase', ['herosJourney', 'phaseA']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['perm', ['go', ['R', 'V']]] if ['phase', ['herosJourney', 'phaseA']]
 %
-terminated(perm(go(R,U)),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+terminated(perm(go(R,V)),story,I) :-
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,phaseA),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
-% Translation of intHerosJourney(R,S,T,U) terminates ['phase', ['herosJourney', 'inactive']] if ['phase', ['herosJourney', 'inactive']]
+% Translation of intHerosJourney(R,S,T,U,V) terminates ['phase', ['herosJourney', 'inactive']] if ['phase', ['herosJourney', 'inactive']]
 %
 terminated(phase(herosJourney,inactive),story,I) :-
-   occurred(intHerosJourney(R,S,T,U),story,I),
+   occurred(intHerosJourney(R,S,T,U,V),story,I),
    holdsat(live(story),story,I),inst(story),
    holdsat(phase(herosJourney,inactive),story,I),
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    inst(story), instant(I).
 %
 % noninertial rules
@@ -486,24 +637,31 @@ terminated(phase(herosJourney,inactive),story,I) :-
 % no creation event
 holdsat(live(story),story,I) :- start(I), inst(story).
 holdsat(perm(null),story,I) :- start(I), inst(story).
-% initially: perm(go(R,U))
-% condition: role(R,hero) and place(U,home)
-holdsat(perm(go(R,U)),story,I) :-
+% initially: perm(go(R,V))
+% condition: role(R,hero) and place(V,home)
+holdsat(perm(go(R,V)),story,I) :-
    agent(R),
-   placename(U),
+   placename(V),
    holdsat(role(R,hero),story,I),
-   holdsat(place(U,home),story,I),
+   holdsat(place(V,home),story,I),
    inst(story), start(I).
-% initially: pow(story,intHerosJourney(R,S,T,U))
-% condition: R!=S and S!=T and T!=U
-holdsat(pow(story,intHerosJourney(R,S,T,U)),story,I) :-
+% initially: pow(story,intHerosJourney(R,S,T,U,V))
+% condition: R!=S and S!=T and T!=U and U!=V
+holdsat(pow(story,intHerosJourney(R,S,T,U,V)),story,I) :-
    agent(S),
    agent(R),
    placename(U),
-   objectname(T),
+   agent(T),
+   placename(V),
    R!=S,
    S!=T,
    T!=U,
+   U!=V,
+   inst(story), start(I).
+% initially: pow(story,intGo(S,U))
+holdsat(pow(story,intGo(S,U)),story,I) :-
+   agent(S),
+   placename(U),
    inst(story), start(I).
 % initially: phase(herosJourney,phaseA)
 holdsat(phase(herosJourney,phaseA),story,I) :-
@@ -511,14 +669,17 @@ holdsat(phase(herosJourney,phaseA),story,I) :-
 % initially: role(lukeSkywalker,hero)
 holdsat(role(lukeSkywalker,hero),story,I) :-
    inst(story), start(I).
-% initially: role(obiWan,dispatcher)
-holdsat(role(obiWan,dispatcher),story,I) :-
+% initially: role(professorMoriarty,villain)
+holdsat(role(professorMoriarty,villain),story,I) :-
+   inst(story), start(I).
+% initially: role(commissionerGordon,dispatcher)
+holdsat(role(commissionerGordon,dispatcher),story,I) :-
    inst(story), start(I).
 % initially: place(tatooine,home)
 holdsat(place(tatooine,home),story,I) :-
    inst(story), start(I).
-% initially: object(lightSaber,weapon)
-holdsat(object(lightSaber,weapon),story,I) :-
+% initially: place(jungle,away)
+holdsat(place(jungle,away),story,I) :-
    inst(story), start(I).
 %
 % -------------------------------GROUNDING-------------------------------

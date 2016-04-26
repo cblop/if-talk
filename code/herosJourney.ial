@@ -18,98 +18,125 @@ fluent object(ObjectName, Object);
 fluent at(Agent, Place);
 
 % EXTERNAL EVENTS: The Hero's Journey ----------
-exogenous event gets(Agent, ObjectName);
+exogenous event kill(Agent, Agent);
 exogenous event go(Agent, PlaceName);
 exogenous event meet(Agent, Agent);
 exogenous event noDeadline(Identity);
 
 % VIOLATION EVENTS: The Hero's Journey ----------
+violation event violAwayGoHero;
 violation event noViolation(Identity);
 
 % INST EVENTS: The Hero's Journey ----------
-inst event intHerosJourney(Agent, Agent, ObjectName, PlaceName);
+inst event intHerosJourney(Agent, Agent, Agent, PlaceName, PlaceName);
+inst event intGo(Agent, PlaceName);
 
-
+% OBLIGATION FLUENTS: The Hero's Journey ----------
+obligation fluent obl(go(Agent, PlaceName), go(Agent, PlaceName), noViolation(Identity));
 
 % INITIATES: The Hero's Journey ----------
-intHerosJourney(R, S, T, U) initiates
+intHerosJourney(R, S, T, U, V) initiates
     phase(herosJourney, phaseA),
-    perm(go(R, U)) if
+    perm(go(R, V)) if
         phase(herosJourney, inactive),
         role(R, hero),
-        place(U, home);
-intHerosJourney(R, S, T, U) initiates
+        place(V, home);
+intHerosJourney(R, S, T, U, V) initiates
     phase(herosJourney, phaseB),
-    perm(meet(R, S)) if
+    perm(meet(R, T)) if
         phase(herosJourney, phaseA),
         role(R, hero),
-        role(S, dispatcher);
-intHerosJourney(R, S, T, U) initiates
+        role(T, dispatcher);
+intHerosJourney(R, S, T, U, V) initiates
     phase(herosJourney, phaseC),
-    perm(gets(R, T)) if
+    obl(go(R, U), go(S, V), noViolation(Identity)) if
         phase(herosJourney, phaseB),
         role(R, hero),
-        object(T, weapon);
-intHerosJourney(R, S, T, U) initiates
+        place(U, away),
+        role(S, villain),
+        place(V, home);
+intHerosJourney(R, S, T, U, V) initiates
     phase(herosJourney, phaseD),
-    perm(go(R, U)) if
+    perm(kill(R, S)) if
         phase(herosJourney, phaseC),
         role(R, hero),
-        place(U, home);
-intHerosJourney(R, S, T, U) initiates
+        role(S, villain);
+intHerosJourney(R, S, T, U, V) initiates
+    phase(herosJourney, phaseE),
+    perm(go(R, V)) if
+        phase(herosJourney, phaseD),
+        role(R, hero),
+        place(V, home);
+intHerosJourney(R, S, T, U, V) initiates
     phase(herosJourney, done) if
-        phase(herosJourney, phaseD);
+        phase(herosJourney, phaseE);
 
 
 % TERMINATES: The Hero's Journey ----------
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, inactive) if
         phase(herosJourney, inactive);
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, phaseA),
-    perm(go(R, U)) if
+    perm(go(R, V)) if
         phase(herosJourney, phaseA);
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, phaseB),
-    perm(meet(R, S)) if
+    perm(meet(R, T)) if
         phase(herosJourney, phaseB);
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, phaseC),
-    perm(gets(R, T)) if
+    obl(go(R, U), go(S, V), noViolation(Identity)) if
         phase(herosJourney, phaseC);
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, phaseD),
-    perm(go(R, U)) if
+    perm(kill(R, S)) if
         phase(herosJourney, phaseD);
-intHerosJourney(R, S, T, U) terminates
+intHerosJourney(R, S, T, U, V) terminates
+    phase(herosJourney, phaseE),
+    perm(go(R, V)) if
+        phase(herosJourney, phaseE);
+intHerosJourney(R, S, T, U, V) terminates
     phase(herosJourney, done) if
         phase(herosJourney, done);
+intGo(S, U) terminates
+    obl(go(R, T), go(S, U), noViolation(Identity)) if
+        role(R, hero),
+        place(T, away),
+        role(S, villain),
+        place(U, home);
 
 
 % GENERATES: The Hero's Journey ----------
-meet(R, S) generates
-    intHerosJourney(R, S, T, U) if
+meet(R, T) generates
+    intHerosJourney(R, S, T, U, V) if
         role(R, hero),
-        role(S, dispatcher);
-go(R, U) generates
-    intHerosJourney(R, S, T, U) if
+        role(T, dispatcher);
+go(R, V) generates
+    intHerosJourney(R, S, T, U, V) if
         role(R, hero),
-        place(U, home);
-gets(R, T) generates
-    intHerosJourney(R, S, T, U) if
+        place(V, home);
+kill(R, S) generates
+    intHerosJourney(R, S, T, U, V) if
         role(R, hero),
-        object(T, weapon);
+        role(S, villain);
+go(R, T) generates
+    intGo(R, T) if
+        role(R, hero),
+        place(T, away);
 
 
 
 % INITIALLY: -----------
 initially
-    perm(go(R, U)) if role(R, hero), place(U, home);
+    perm(go(R, V)) if role(R, hero), place(V, home);
 initially
-    pow(intHerosJourney(R, S, T, U)) if R != S, S != T, T != U;
+    pow(intHerosJourney(R, S, T, U, V)) if R != S, S != T, T != U, U != V;
 initially
+    pow(intGo(S, U)),
     phase(herosJourney, phaseA),
     role(lukeSkywalker, hero),
-    role(obiWan, dispatcher),
+    role(professorMoriarty, villain),
+    role(commissionerGordon, dispatcher),
     place(tatooine, home),
-    object(lightSaber, weapon);
+    place(jungle, away);
